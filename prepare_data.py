@@ -40,9 +40,10 @@ def group_of(name):
         day, hour, minute = name[8:18], name[19:21], int(name[22:24])
         return "vid_" + day + "_" + hour + "_" + str(minute // 5)
     else:
-        # 20250216_164325 -> day, hour, minute
-        day, hour, minute = name[:8], name[9:11], int(name[11:13])
-        return "pho_" + day + "_" + hour + "_" + str(minute // 5)
+        # phone photo, e.g. 20250216_164325 -> group by day
+        # (static captures on foot: the same pothole may be photographed
+        #  several times within one session, so we keep the whole day together)
+        return "pho_" + name[:8]
 
 # ---------- Step 3: read everything and count ----------
 image_files = sorted(os.listdir(RAW + "/images"))
