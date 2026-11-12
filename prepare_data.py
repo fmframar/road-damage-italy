@@ -33,8 +33,8 @@ def read_label(path):
 def group_of(name):
     """Images taken close in time look almost the same, so we keep
     them together (same split). Groups = 5-minute windows."""
-    if name.startswith("vlcsnap") and name[8:].isdigit():
-        return "num_" + str(int(name[8:]) // 20)          # numbered frames: blocks of 20
+        if name.startswith("vlcsnap") and name[8:13].isdigit():
+        return "num_" + str(int(name[8:13]) // 20)        # numbered frames: blocks of 20          
     elif name.startswith("vlcsnap"):
         # vlcsnap-2025-02-19-14h00m39s870 -> day, hour, minute
         day, hour, minute = name[8:18], name[19:21], int(name[22:24])
