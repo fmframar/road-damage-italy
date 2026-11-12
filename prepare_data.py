@@ -30,17 +30,19 @@ def read_label(path):
     return boxes
 
 
-# ---------- Step 2: decide which "group" an image belongs to ----------
 def group_of(name):
     """Images taken close in time look almost the same, so we keep
-    them together (in the same split)."""
+    them together (same split). Groups = 5-minute windows."""
     if name.startswith("vlcsnap") and name[8:].isdigit():
-        return "num_" + str(int(name[8:]) // 50)   # numbered frames: blocks of 50
+        return "num_" + str(int(name[8:]) // 20)          # numbered frames: blocks of 20
     elif name.startswith("vlcsnap"):
-        return name[8:22]                          # date + hour, e.g. 2025-02-18-17h
+        # vlcsnap-2025-02-19-14h00m39s870 -> day, hour, minute
+        day, hour, minute = name[8:18], name[19:21], int(name[22:24])
+        return "vid_" + day + "_" + hour + "_" + str(minute // 5)
     else:
-        return name[:11]                           # phone photo: date + hour
-
+        # 20250216_164325 -> day, hour, minute
+        day, hour, minute = name[:8], name[9:11], int(name[11:13])
+        return "pho_" + day + "_" + hour + "_" + str(minute // 5)
 
 # ---------- Step 3: read everything and count ----------
 image_files = sorted(os.listdir(RAW + "/images"))
