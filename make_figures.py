@@ -30,6 +30,15 @@ RED = (255, 0, 0)                          # predicted boxes (RGB)
 
 os.makedirs(OUT, exist_ok=True)
 
+# Images for figure 1, chosen by hand from the Rome test set (dashboard camera):
+# a strong building shadow, road markings + a manhole, a manhole-like cover.
+# Leave the list empty to choose automatically.
+CLASSICAL_IMAGES = [
+    "vlcsnap-2025-02-18-18h31m02s378.jpg",
+    "vlcsnap-2025-02-18-18h32m11s526.jpg",
+    "vlcsnap-2025-02-18-18h33m11s843.jpg",
+]
+
 
 # ---------- small helpers ----------
 def load_rgb(path):
@@ -76,10 +85,17 @@ def draw(img, boxes, color, with_conf=False):
 def classical_figure():
     img_dir = "data/yolo/images/test"
     files = sorted(os.listdir(img_dir))
-    # images with BOTH a pothole (0) and a manhole (2): the hardest case
-    chosen = [f for f in files if {0, 2} <= classes_in(label_path_of(img_dir, f))][:3]
+    if CLASSICAL_IMAGES:
+        chosen = [f for f in CLASSICAL_IMAGES if f in files]
+        for f in CLASSICAL_IMAGES:
+            if f not in files:
+                print("WARNING: not in the test set, skipped:", f)
+    else:
+        # images with BOTH a pothole (0) and a manhole (2): the hardest case
+        chosen = [f for f in files if {0, 2} <= classes_in(label_path_of(img_dir, f))][:3]
 
-    fig, axes = plt.subplots(len(chosen), 3, figsize=(18, 4 * len(chosen)))
+    # squeeze=False: axes is always a 2D grid, even with a single image
+    fig, axes = plt.subplots(len(chosen), 3, figsize=(18, 4 * len(chosen)), squeeze=False)
     for row, f in zip(axes, chosen):
         rgb = load_rgb(os.path.join(img_dir, f))
         h, w = rgb.shape[:2]
