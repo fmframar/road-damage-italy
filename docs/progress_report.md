@@ -90,9 +90,3 @@ Gradio web app on Google Colab:
 - README with theory (YOLO architecture, tensor pipeline), results and figures.
 - Slides and video.
 - Possible extra: domain adaptation on part of the Czech data, comparing Czech-only fine-tuning with Czech + Rome, to measure forgetting.
-
-## 9. Questions
-
-1. Is the scope of the project adequate?
-2. Is the domain-adaptation experiment worth adding?
-3. What do you expect in the README and in the video?
