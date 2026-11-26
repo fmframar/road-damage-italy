@@ -18,6 +18,9 @@ CLASSES = ["pothole", "crack", "manhole"]
 # model name -> image size used during training (we test with the same size)
 MODELS = {
     "yolo11n_640": 640,
+    "yolo11n_noaug": 640,
+    "yolo11n_lightaug": 640,
+    "yolo11n_strongaug": 640,
     "yolo11n_1280": 1280,
     "yolo11n_frozen": 640,
     "yolo11n_scratch": 640,
