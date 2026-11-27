@@ -40,7 +40,7 @@ AUGMENTATIONS = {
         "mosaic": 0.0,
     },
 
-    "light": {                  # half of the default changes, and no mosaic
+    "light": {                  # weaker colour, shift and zoom; no mosaic (hue and flip unchanged)
         "hsv_s": 0.35,          # colour saturation (default 0.7)
         "hsv_v": 0.2,           # brightness (default 0.4)
         "translate": 0.05,      # shift (default 0.1)
